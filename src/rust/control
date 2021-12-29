@@ -1,0 +1,9 @@
+Package: rust
+Version: version
+Section: custom
+Priority: optional
+Architecture: arm
+Essential: no
+Installed-Size: 1024
+Maintainer: lancethepants
+Description: Rust systems programming language

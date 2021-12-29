@@ -1,0 +1,45 @@
+[llvm]
+ccache = "/usr/local/bin/ccache"
+#static-libstdcpp = true
+
+#cflags = ""
+#cxxflags = ""
+#ldflags = ""
+
+[build]
+
+build-stage = 2
+
+host = ["armv7-unknown-linux-uclibceabi"]
+target = ["armv7-unknown-linux-uclibceabi"]
+
+extended = true
+cargo-native-static = true
+
+#tools = ["cargo", "clippy", "rustfmt", "analysis", "src"] 
+
+[install]
+
+prefix = "/mmc"
+sysconfdir = "etc"
+
+[rust]
+
+description = "tomatoware"
+rpath = false
+channel = "stable"
+
+[target.armv7-unknown-linux-uclibceabi]
+
+cc = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-gcc"
+cxx = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-g++"
+ar = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-ar"
+ranlib = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-ranlib"
+linker = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-gcc"
+
+#crt-static = true
+
+[dist]
+
+src-tarball = false
+compression-formats = ["gz"]
