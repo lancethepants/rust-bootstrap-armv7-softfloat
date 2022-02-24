@@ -14,7 +14,7 @@ CFLAGS=$EXTRACFLAGS
 CXXFLAGS=$CFLAGS
 CONFIGURE="./configure --prefix=$PREFIX --host=$DESTARCH-linux"
 MAKE="make -j`nproc`"
-export CCACHE_DIR=$HOME/.ccache
+export CCACHE_DIR=$HOME/.ccache_rust
 
 ########### #################################################################
 # OPENSSL # #################################################################
@@ -55,7 +55,7 @@ fi
 # RUST # ####################################################################
 ######## ####################################################################
 
-RUST_VERSION=1.58.1
+RUST_VERSION=1.59.0
 RUST_VERSION_REV=1
 
 cd $SRC/rust
