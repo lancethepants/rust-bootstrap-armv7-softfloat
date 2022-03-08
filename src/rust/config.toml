@@ -1,5 +1,8 @@
 [llvm]
+optimize = true
+release-debuginfo = false
 ccache = "/usr/local/bin/ccache"
+ninja = true
 #static-libstdcpp = true
 
 #cflags = ""
@@ -9,9 +12,11 @@ ccache = "/usr/local/bin/ccache"
 [build]
 
 build-stage = 2
+test-stage = 2
+doc-stage = 2
 
 host = ["armv7-unknown-linux-uclibceabi"]
-target = ["armv7-unknown-linux-uclibceabi"]
+target = ["armv7-unknown-linux-uclibceabi","mipsel-unknown-linux-uclibc"]
 
 extended = true
 cargo-native-static = true
@@ -25,6 +30,8 @@ sysconfdir = "etc"
 
 [rust]
 
+optimize = true
+debug = false
 description = "tomatoware"
 rpath = false
 channel = "stable"
@@ -36,6 +43,14 @@ cxx = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-g++"
 ar = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-ar"
 ranlib = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-ranlib"
 linker = "/opt/tomatoware/arm-soft-mmc/bin/arm-linux-gcc"
+
+[target.mipsel-unknown-linux-uclibc]
+
+cc = "/opt/tomatoware/mipsel-soft-mmc/bin/mipsel-linux-gcc"
+cxx = "/opt/tomatoware/mipsel-soft-mmc/bin/mipsel-linux-g++"
+ar = "/opt/tomatoware/mipsel-soft-mmc/bin/mipsel-linux-ar"
+ranlib = "/opt/tomatoware/mipsel-soft-mmc/bin/mipsel-linux-ranlib"
+linker = "/opt/tomatoware/mipsel-soft-mmc/bin/mipsel-linux-gcc"
 
 #crt-static = true
 

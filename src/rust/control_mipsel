@@ -1,0 +1,10 @@
+Package: rust-std-mipsel
+Depends: rust
+Version: version
+Section: custom
+Priority: optional
+Architecture: arm
+Essential: no
+Installed-Size: 1024
+Maintainer: lancethepants
+Description: Rust std library for mipsel

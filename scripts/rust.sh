@@ -56,7 +56,7 @@ fi
 ######## ####################################################################
 
 RUST_VERSION=1.59.0
-RUST_VERSION_REV=1
+RUST_VERSION_REV=2
 
 cd $SRC/rust
 
@@ -83,11 +83,15 @@ fi
 if [ ! -f .installed ]; then
 
 	CARGO_TARGET_ARMV7_UNKNOWN_LINUX_UCLIBCEABI_RUSTFLAGS='-Clink-arg=-s -Clink-arg=-Wl,--dynamic-linker=/mmc/lib/ld-uClibc.so.1 -Clink-arg=-Wl,-rpath,/mmc/lib' \
+	CFLAGS_armv7_unknown_linux_uclibceabi="-march=armv7-a -mtune=cortex-a9" \
+	CXXFLAGS_armv7_unknown_linux_uclibceabi="-march=armv7-a -mtune=cortex-a9" \
+	CFLAGS_mipsel_unknown_linux_uclibc="-mips32 -mtune=mips32" \
+	CXXFLAGS_mipsel_unknown_linux_uclibc="-mips32 -mtune=mips32" \
 	ARMV7_UNKNOWN_LINUX_UCLIBCEABI_OPENSSL_LIB_DIR=$DEST/lib \
 	ARMV7_UNKNOWN_LINUX_UCLIBCEABI_OPENSSL_INCLUDE_DIR=$DEST/include \
 	ARMV7_UNKNOWN_LINUX_UCLIBCEABI_OPENSSL_NO_VENDOR=1 \
 	ARMV7_UNKNOWN_LINUX_UCLIBCEABI_OPENSSL_STATIC=1 \
-	DESTDIR=$BASE/install \
+	DESTDIR=$BASE/armv7-unknown-linux-uclibceabi \
 	./x.py install
 	touch .installed
 fi
@@ -95,14 +99,25 @@ fi
 cd $BASE
 
 if [ ! -f .prepped ]; then
-	mkdir -p ./install/DEBIAN
-	cp $SRC/rust/control ./install/DEBIAN
-	sed -i 's,version,'"$RUST_VERSION"'-'"$RUST_VERSION_REV"',g' ./install/DEBIAN/control
+	mkdir -p $BASE/armv7-unknown-linux-uclibceabi/DEBIAN \
+		 $BASE/mipsel-unknown-linux-uclibc/DEBIAN \
+		 $BASE/mipsel-unknown-linux-uclibc/mmc/lib/rustlib
+	cp $SRC/rust/control $BASE/armv7-unknown-linux-uclibceabi/DEBIAN
+	cp $SRC/rust/control_mipsel $BASE/mipsel-unknown-linux-uclibc/DEBIAN/control
+	sed -i 's,version,'"$RUST_VERSION"'-'"$RUST_VERSION_REV"',g' \
+		$BASE/armv7-unknown-linux-uclibceabi/DEBIAN/control \
+		$BASE/mipsel-unknown-linux-uclibc/DEBIAN/control
+	mv armv7-unknown-linux-uclibceabi/mmc/lib/rustlib/mipsel-unknown-linux-uclibc \
+	   armv7-unknown-linux-uclibceabi/mmc/lib/rustlib/manifest-rust-std-mipsel-unknown-linux-uclibc \
+	   armv7-unknown-linux-uclibceabi/mmc/lib/rustlib/manifest-rust-analysis-mipsel-unknown-linux-uclibc \
+	   $BASE/mipsel-unknown-linux-uclibc/mmc/lib/rustlib
 	touch .prepped
 fi
 
 if [ ! -f .packaged ]; then
-	dpkg-deb --build install
-	dpkg-name install.deb
+	dpkg-deb --build armv7-unknown-linux-uclibceabi
+	dpkg-name armv7-unknown-linux-uclibceabi.deb
+	dpkg-deb --build mipsel-unknown-linux-uclibc
+	dpkg-name mipsel-unknown-linux-uclibc.deb
 	touch .packaged
 fi
