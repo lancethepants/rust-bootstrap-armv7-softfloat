@@ -20,7 +20,7 @@ export CCACHE_DIR=$HOME/.ccache_rust
 # OPENSSL # #################################################################
 ########### #################################################################
 
-OPENSSL_VERSION=1.1.1m
+OPENSSL_VERSION=1.1.1n
 
 cd $SRC/openssl
 
@@ -56,7 +56,7 @@ fi
 ######## ####################################################################
 
 RUST_VERSION=1.59.0
-RUST_VERSION_REV=2
+RUST_VERSION_REV=3
 
 cd $SRC/rust
 
