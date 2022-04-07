@@ -55,8 +55,8 @@ fi
 # RUST # ####################################################################
 ######## ####################################################################
 
-RUST_VERSION=1.59.0
-RUST_VERSION_REV=3
+RUST_VERSION=1.60.0
+RUST_VERSION_REV=1
 
 cd $SRC/rust
 
@@ -74,7 +74,6 @@ if [ ! -f .configured ]; then
 fi
 
 if [ ! -f .patched ]; then
-	patch -p1 < $PATCHES/rust/0001-Add-armv7_unknown_linux_uclibceabi-target.patch
 	./x.py
 	./build/x86_64-unknown-linux-gnu/stage0/bin/cargo update -p libc
 	touch .patched
