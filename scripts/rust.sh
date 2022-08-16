@@ -55,7 +55,7 @@ fi
 # RUST # ####################################################################
 ######## ####################################################################
 
-RUST_VERSION=1.62.0
+RUST_VERSION=1.63.0
 RUST_VERSION_REV=1
 
 cd $SRC/rust
@@ -75,7 +75,7 @@ fi
 
 if [ ! -f .patched ]; then
 	./x.py
-	./build/x86_64-unknown-linux-gnu/stage0/bin/cargo update -p libc
+#	./build/x86_64-unknown-linux-gnu/stage0/bin/cargo update -p libc
 	touch .patched
 fi
 
